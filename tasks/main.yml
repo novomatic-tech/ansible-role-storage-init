@@ -1,2 +1,10 @@
 ---
 # tasks file for storage-init
+
+- include_tasks: install.yml
+  tags:
+    - tools-install 
+
+- include_tasks: config.yml
+  tags:
+    - storage-config

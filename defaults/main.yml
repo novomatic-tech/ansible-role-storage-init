@@ -1,2 +1,24 @@
 ---
 # defaults file for storage-init
+
+default_fs_type: xfs
+default_vg_opts: []
+
+rhel_packages:
+  - e2fsprogs
+  - lvm2
+  - xfsprogs
+  - xfsdump
+
+#lvm_vgs:
+#  - name: centos
+#    disks:
+#    - /dev/sda2
+
+#lvm_lvs:
+#  - name: docker
+#    vg: centos
+#    size: 50G
+#    fstype: xfs
+#    path: "/var/lib/docker"
+#    opts: "-n ftype=1"
