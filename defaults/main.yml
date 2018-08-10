@@ -7,6 +7,7 @@ default_vg_opts: []
 rhel_packages:
   - e2fsprogs
   - lvm2
+  - sg3_utils
   - xfsprogs
   - xfsdump
 
@@ -15,7 +16,7 @@ rhel_packages:
 #    disks:
 #    - /dev/sda2
 
-#lvm_lvs:
+#lvm_volumes:
 #  - name: docker
 #    vg: centos
 #    size: 50G
