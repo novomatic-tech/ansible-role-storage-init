@@ -5,7 +5,7 @@
 - name: Extend pvsize
   command: pvresize {{ item.1 }}
   register: pvresize_status
-  when: '"Failed to find" not in pvresize_status.stderr '
+  failed_when: '"Failed to find" not in pvresize_status.stderr '
   loop: "{{ lvm_vgs|subelements('disks') }}"
 
 - name: Create lvm volume group
