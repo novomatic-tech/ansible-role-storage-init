@@ -1,0 +1,46 @@
+- name: Scan SCSI for new device and update existing device
+  shell: |
+    /usr/bin/scsi-rescan -s -u
+
+- name: Extend pvsize
+  command: pvresize {{ item.1 }}
+  register: pvresize_status
+  failed_when: 'pvresize_status.rc != 0 and "Failed to find" not in pvresize_status.stderr '
+  loop: "{{ lvm_vgs|subelements('disks') }}"
+
+- name: Create lvm volume group
+  lvg:
+    vg: "{{ item.0.name }}"
+    pvs: "{{ item.1 }}"
+  loop: "{{ lvm_vgs|subelements('disks') }}"
+
+- name: Create folders
+  file:
+    path: "{{ item.path }}"
+    recurse: yes
+    state: directory
+  with_items: "{{ lvm_volumes }}"
+
+- name: Create volume
+  lvol:
+    vg: "{{ item.vg }}"
+    lv: "{{ item.name }}"
+    size: "{{ item.size }}"
+  with_items: "{{ lvm_volumes }}"
+
+- name: Set or grow filesystem per logical volume
+  filesystem:
+    fstype: "{{ item.fstype | default(default_fs_type) }}"
+    dev: "/dev/mapper/{{ item.vg }}-{{ item.name }}"
+    opts: "{{ item.opts | default(default_vg_opts) }}"
+    force: no
+    resizefs: yes
+  with_items: "{{ lvm_volumes }}"
+
+- name: Update mountpoints
+  mount:
+    path: "{{ item.path }}"
+    src: "/dev/mapper/{{ item.vg }}-{{ item.name }}"
+    fstype: "{{ item.fstype | default(default_fs_type) }}"
+    state: mounted
+  with_items: "{{ lvm_volumes }}"
