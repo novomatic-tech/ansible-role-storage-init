@@ -1,7 +1,11 @@
-Role Name
+[![Build Status](https://travis-ci.org/novomatic-tech/ansible-role-storage-init.svg?branch=master)](https://travis-ci.org/novomatic-tech/ansible-role-storage-init) [![License](https://img.shields.io/badge/license-MIT%20License-brightgreen.svg)](https://opensource.org/licenses/MIT)
+
+Storage-init
 =========
 
-Simple role to initialize lvm volumes on host. This role was created to automate machines bootstrapping.
+Simple role to initialize LVM volumes on host. This role was created to automate machines bootstrapping. Role is dedicated to initial setup of LVM and increase existing volumes or fs.
+
+If something is missing please create a issue on [github](https://github.com/novomatic-tech/ansible-role-storage-init)
 
 Default Behavior
 -----------------
@@ -12,9 +16,11 @@ Designing defaults:
  * Resizing existing LVM physical volumes.
  * Resizing file system.
 
+*Shrinking operation is not support by the file system module and we do not plan to add some extra logic for it.*
+
 Role Variables
 --------------
-All variables persent here: [main.yml](./defaults/main.yml).
+All variables present here: [main.yml](./defaults/main.yml).
 
 
 Example Playbook
