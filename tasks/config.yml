@@ -5,7 +5,7 @@
 - name: Extend pvsize
   command: pvresize {{ item.1 }}
   register: pvresize_status
-  failed_when: '"Failed to find" not in pvresize_status.stderr '
+  failed_when: 'pvresize_status.rc != 0 and "Failed to find" not in pvresize_status.stderr '
   loop: "{{ lvm_vgs|subelements('disks') }}"
 
 - name: Create lvm volume group
@@ -28,15 +28,16 @@
     size: "{{ item.size }}"
   with_items: "{{ lvm_volumes }}"
 
-- name: Set {{ item.fstype }} per logical volume
+- name: Set or grow filesystem per logical volume
   filesystem:
     fstype: "{{ item.fstype | default(default_fs_type) }}"
     dev: "/dev/mapper/{{ item.vg }}-{{ item.name }}"
     opts: "{{ item.opts | default(default_vg_opts) }}"
     force: no
+    resizefs: yes
   with_items: "{{ lvm_volumes }}"
 
-- name: Update mountpoint
+- name: Update mountpoints
   mount:
     path: "{{ item.path }}"
     src: "/dev/mapper/{{ item.vg }}-{{ item.name }}"
