@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/novomatic-tech/ansible-role-storage-init.svg?branch=master)](https://travis-ci.org/novomatic-tech/ansible-role-storage-init) [![License](https://img.shields.io/badge/license-MIT%20License-brightgreen.svg)](https://opensource.org/licenses/MIT)
+[![Build Status](https://travis-ci.org/novomatic-tech/ansible-role-storage-init.svg?branch=master)](https://travis-ci.org/novomatic-tech/ansible-role-storage-init) [![License](https://img.shields.io/badge/license-MIT%20License-brightgreen.svg)](https://opensource.org/licenses/MIT) [![Ansible Role Name](https://img.shields.io/ansible/role/28820.svg)](https://galaxy.ansible.com/novomatic-tech/storage_init/) [![Ansible Role counter](https://img.shields.io/ansible/role/d/28820.svg)](https://galaxy.ansible.com/novomatic-tech/storage_init/)
 
 Ansible-role-storage-init
 =========
