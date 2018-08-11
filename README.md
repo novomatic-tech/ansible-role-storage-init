@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/novomatic-tech/ansible-role-storage-init.svg?branch=master)](https://travis-ci.org/novomatic-tech/ansible-role-storage-init) [![License](https://img.shields.io/badge/license-MIT%20License-brightgreen.svg)](https://opensource.org/licenses/MIT)
 
-Storage-init
+Ansible-role-storage-init
 =========
 
 Simple role to initialize LVM volumes on host. This role was created to automate machines bootstrapping. Role is dedicated to initial setup of LVM and increase existing volumes or fs.
