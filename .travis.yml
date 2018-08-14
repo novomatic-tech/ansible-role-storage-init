@@ -17,11 +17,11 @@ deploy:
   provider: script
   skip_cleanup: true
   script: .travis/auto.sh
-  on:
-    branch: master
-branches:
-  only:
-    - master
+  # on:
+  #   branch: master
+# branches:
+#   only:
+#     - master
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

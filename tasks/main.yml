@@ -3,7 +3,7 @@
 
 - include_tasks: install.yml
   tags:
-    - tools-install 
+    - tools-install
 
 - include_tasks: config.yml
   tags:
