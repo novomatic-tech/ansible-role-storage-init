@@ -7,7 +7,18 @@ verifier:
   name: testinfra
 dependency:
   name: shell
-  command: ./.travis/bootstrap.sh
+  command: ./.travis/image.sh
+molecule:
+  test:
+    sequence:
+      - syntax
+      - destroy
+      - create
+      - converge
+      #pvresize command required and it always changed -(disk module does not suport resize)
+      # - idempotence
+      - verify
+      - destroy
 docker:
   build_image: False
   containers:

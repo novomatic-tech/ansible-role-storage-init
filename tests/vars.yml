@@ -6,7 +6,7 @@ lvm_vgs:
 lvm_volumes:
  - name: test
    vg: test
-   size: 50M
+   size: 52M
    fstype: xfs
    path: "/var/lib/docker"
    opts: "-n ftype=1"

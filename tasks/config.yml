@@ -1,6 +1,8 @@
 - name: Scan SCSI for new device and update existing device
-  shell: |
-    /usr/bin/scsi-rescan -s -u
+  command: /usr/bin/scsi-rescan -s -u
+  register: scsi_rescan
+  changed_when: ('0 new or changed' not in scsi_rescan.stdout ) or
+                ('0 remapped or resized' not in scsi_rescan.stdout)
 
 - name: Extend pvsize
   command: pvresize {{ item.1 }}

@@ -4,7 +4,7 @@ galaxy_info:
   description: Simple role to initialize lvm volumes on host.
   company: Novomatic Technologies Poland
   license: MIT
-  min_ansible_version: 2.5
+  min_ansible_version: 2.6
   platforms:
   - name: EL
     versions:
