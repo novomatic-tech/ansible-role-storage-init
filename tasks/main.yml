@@ -8,3 +8,4 @@
 - include_tasks: config.yml
   tags:
     - storage-config
+  when: lvm_volumes is defined and lvm_vgs is defined
