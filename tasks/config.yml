@@ -34,7 +34,7 @@
   filesystem:
     fstype: "{{ item.fstype | default(default_fs_type) }}"
     dev: "/dev/mapper/{{ item.vg }}-{{ item.name }}"
-    opts: "{{ item.opts | default(default_vg_opts) }}"
+    opts: "{{ item.opts | default(default_vg_opts) | default(omit) }}"
     force: no
     resizefs: yes
   with_items: "{{ lvm_volumes }}"
