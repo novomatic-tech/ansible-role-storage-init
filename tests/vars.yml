@@ -15,4 +15,3 @@ lvm_volumes:
    size: 20M
    fstype: xfs
    path: "/var/lib/test2"
-   opts: "-n ftype=1"
