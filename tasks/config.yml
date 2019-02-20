@@ -8,6 +8,7 @@
   command: pvresize {{ item.1 }}
   register: pvresize_status
   failed_when: 'pvresize_status.rc != 0 and "Failed to find" not in pvresize_status.stderr '
+  changed_when: 'pvresize_status.rc == 0 and "1 physical volume(s) resized or updated" in pvresize_status.stdout '
   loop: "{{ lvm_vgs|subelements('disks') }}"
 
 - name: Create lvm volume group
