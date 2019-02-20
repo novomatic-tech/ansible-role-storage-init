@@ -3,5 +3,5 @@
   become_method: sudo
   yum:
     name: "{{ item }}"
-    state: latest
+    state: present
   loop: "{{ rhel_packages }}"
