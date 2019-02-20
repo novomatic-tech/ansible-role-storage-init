@@ -13,6 +13,6 @@ galaxy_info:
   - lvm
   - storage
   - partition
-  - mount point
+  - mount-point
 
 dependencies: []
