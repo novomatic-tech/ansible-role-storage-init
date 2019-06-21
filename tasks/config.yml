@@ -13,9 +13,9 @@
 
 - name: Create lvm volume group
   lvg:
-    vg: "{{ item.0.name }}"
-    pvs: "{{ item.1 }}"
-  loop: "{{ lvm_vgs|subelements('disks') }}"
+    vg: "{{ item.name }}"
+    pvs: "{{ item.disks | join(',') }}"
+  loop: "{{ lvm_vgs }}"
 
 - name: Create folders
   file:
