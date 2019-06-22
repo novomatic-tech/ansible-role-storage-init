@@ -1,3 +1,4 @@
+---
 - name: Scan SCSI for new device and update existing device
   command: /usr/bin/scsi-rescan -s -u
   register: scsi_rescan
@@ -13,9 +14,9 @@
 
 - name: Create lvm volume group
   lvg:
-    vg: "{{ item.0.name }}"
-    pvs: "{{ item.1 }}"
-  loop: "{{ lvm_vgs|subelements('disks') }}"
+    vg: "{{ item.name }}"
+    pvs: "{{ item.disks | join(',') }}"
+  loop: "{{ lvm_vgs }}"
 
 - name: Create folders
   file:
@@ -31,13 +32,13 @@
     size: "{{ item.size }}"
   with_items: "{{ lvm_volumes }}"
 
-- name: Set or grow filesystem per logical volume
+- name: Set filesystem per logical volume
   filesystem:
     fstype: "{{ item.fstype | default(default_fs_type) }}"
     dev: "/dev/mapper/{{ item.vg }}-{{ item.name }}"
     opts: "{{ item.opts | default(default_vg_opts) | default(omit) }}"
     force: no
-    resizefs: yes
+    resizefs: no
   with_items: "{{ lvm_volumes }}"
 
 - name: Update mountpoints
@@ -46,4 +47,13 @@
     src: "/dev/mapper/{{ item.vg }}-{{ item.name }}"
     fstype: "{{ item.fstype | default(default_fs_type) }}"
     state: mounted
+  with_items: "{{ lvm_volumes }}"
+
+- name: Set filesystem per logical volume
+  filesystem:
+    fstype: "{{ item.fstype | default(default_fs_type) }}"
+    dev: "/dev/mapper/{{ item.vg }}-{{ item.name }}"
+    opts: "{{ item.opts | default(default_vg_opts) | default(omit) }}"
+    force: no
+    resizefs: yes
   with_items: "{{ lvm_volumes }}"
