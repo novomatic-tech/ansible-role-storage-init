@@ -49,7 +49,7 @@
     state: mounted
   with_items: "{{ lvm_volumes }}"
 
-- name: Set filesystem per logical volume
+- name: Grow filesystem per logical volume
   filesystem:
     fstype: "{{ item.fstype | default(default_fs_type) }}"
     dev: "/dev/mapper/{{ item.vg }}-{{ item.name }}"
