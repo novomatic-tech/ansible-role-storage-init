@@ -18,6 +18,15 @@ platforms:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
       - /dev/loop0:/dev/loop0
       - /dev/mapper:/dev/mapper
+  - name: ubuntu18
+    image: paulfantom/ubuntu-molecule
+    image_version: 18.04
+    pre_build_image: true
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - /dev/loop0:/dev/loop0
+      - /dev/mapper:/dev/mapper
 provisioner:
   name: ansible
   lint:

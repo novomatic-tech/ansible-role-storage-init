@@ -1,8 +1,24 @@
 ---
-- name: Install system utils packages
+- name: Install storage utils packages
+  become: yes
+  become_method: sudo
+  package:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ storage_packages }}"
+
+- name: Install scsi packages
+  become: yes
+  become_method: sudo
+  apt:
+    name: "sg3-utils"
+    state: present
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Install scsi packages
   become: yes
   become_method: sudo
   yum:
-    name: "{{ item }}"
+    name: "sg3_utils"
     state: present
-  loop: "{{ rhel_packages }}"
+  when: ansible_distribution == 'RedHat'
