@@ -32,10 +32,11 @@ provisioner:
   inventory:
     host_vars:
       ubuntu18:
+        loop_id:1
         lvm_vgs:
           - name: test_ubuntu
             disks:
-              - /dev/loop1
+              - /dev/loop{{loop_id}}
         lvm_volumes:
           - name: test
             vg: test_ubuntu
@@ -48,7 +49,24 @@ provisioner:
             size: 20M
             fstype: xfs
             path: "/var/lib/test2"
-
+      centos7:
+        loop_id: 0
+        lvm_vgs:
+          - name: test
+            disks:
+              - /dev/loop{{loop_id}}
+        lvm_volumes:
+          - name: test
+            vg: test
+            size: 52M
+            fstype: xfs
+            path: "/var/lib/docker"
+            opts: "-n ftype=1"
+          - name: test2
+            vg: test
+            size: 20M
+            fstype: xfs
+            path: "/var/lib/test2"
   lint:
     name: ansible-lint
 verifier:
