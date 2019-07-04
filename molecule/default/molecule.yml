@@ -29,6 +29,26 @@ platforms:
       - /dev/mapper:/dev/mapper
 provisioner:
   name: ansible
+  inventory:
+    host_vars:
+      ubuntu18:
+        lvm_vgs:
+          - name: test_ubuntu
+            disks:
+              - /dev/loop0
+        lvm_volumes:
+          - name: test
+            vg: test_ubuntu
+            size: 52M
+            fstype: xfs
+            path: "/var/lib/docker"
+            opts: "-n ftype=1"
+          - name: test2
+            vg: test_ubuntu
+            size: 20M
+            fstype: xfs
+            path: "/var/lib/test2"
+
   lint:
     name: ansible-lint
 verifier:
