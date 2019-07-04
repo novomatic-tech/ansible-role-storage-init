@@ -14,16 +14,18 @@
         regexp: '^.*udev_rules \='
         line: ' udev_rules = 0'
     - name: Get loopback device
-      shell: "losetup -l | awk '/lvmtest0.img/ {print $1}'"
+      shell: "losetup -l | awk '/lvmtest.*.img/ {print $1}'"
       changed_when: false
       register: lvm_losetup
       tags:
         - skip_ansible_lint
+    - name: Prepare image disk
+      command: 'dd if=/dev/zero of=lvmtest{{ item }}.img bs=200 count=1M'
+      loop: "{{ range(0, 1,1)|list }}"
+      when: lvm_losetup.stdout != "/dev/loop0" and lvm_losetup.stdout != "/dev/loop1"
     - name: Prepare lvm inside container
-      command: '{{ item }}'
-      loop:
-        - 'dd if=/dev/zero of=lvmtest0.img bs=200 count=1M'
-        - 'losetup /dev/loop0 lvmtest0.img'
-      when: lvm_losetup.stdout != "/dev/loop0"
+      command: 'losetup /dev/loop{{ item }} lvmtest{{ item }}.img'
+      loop: "{{ range(0, 1,1)|list }}"
+      when: lvm_losetup.stdout != "/dev/loop0" and lvm_losetup.stdout != "/dev/loop1"
   roles:
     - ansible-role-storage-init

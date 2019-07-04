@@ -25,7 +25,7 @@ platforms:
     privileged: true
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
-      - /dev/loop1:/dev/loop0
+      - /dev/loop1:/dev/loop1
       - /dev/mapper:/dev/mapper
 provisioner:
   name: ansible
@@ -35,7 +35,7 @@ provisioner:
         lvm_vgs:
           - name: test_ubuntu
             disks:
-              - /dev/loop0
+              - /dev/loop1
         lvm_volumes:
           - name: test
             vg: test_ubuntu
