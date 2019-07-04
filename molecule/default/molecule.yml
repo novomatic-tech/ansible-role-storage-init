@@ -45,7 +45,7 @@ provisioner:
             path: "/var/lib/docker"
             opts: "-n ftype=1"
           - name: test2
-            vg: test_ubuntu
+            vg: test-ubuntu
             size: 20M
             fstype: xfs
             path: "/var/lib/test2"
