@@ -32,7 +32,7 @@ provisioner:
   inventory:
     host_vars:
       ubuntu18:
-        loop_id:1
+        loop_id: 1
         lvm_vgs:
           - name: test_ubuntu
             disks:
