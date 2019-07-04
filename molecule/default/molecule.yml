@@ -18,8 +18,55 @@ platforms:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
       - /dev/loop0:/dev/loop0
       - /dev/mapper:/dev/mapper
+  - name: ubuntu18
+    image: paulfantom/ubuntu-molecule
+    image_version: 18.04
+    pre_build_image: true
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - /dev/loop1:/dev/loop1
+      - /dev/mapper:/dev/mapper
 provisioner:
   name: ansible
+  inventory:
+    host_vars:
+      ubuntu18:
+        loop_id: 1
+        lvm_vgs:
+          - name: test_ubuntu
+            disks:
+              - /dev/loop{{loop_id}}
+        lvm_volumes:
+          - name: test
+            vg: test_ubuntu
+            size: 52M
+            fstype: xfs
+            path: "/var/lib/docker"
+            opts: "-n ftype=1"
+          - name: test2
+            vg: test_ubuntu
+            size: 20M
+            fstype: xfs
+            path: "/var/lib/test2"
+      centos7:
+        loop_id: 0
+        lvm_vgs:
+          - name: test
+            disks:
+              - /dev/loop{{loop_id}}
+        lvm_volumes:
+          - name: test
+            vg: test
+            size: 52M
+            fstype: xfs
+            path: "/var/lib/docker"
+            opts: "-n ftype=1"
+          - name: test2
+            vg: test
+            size: 20M
+            fstype: xfs
+            path: "/var/lib/test2"
   lint:
     name: ansible-lint
 verifier:

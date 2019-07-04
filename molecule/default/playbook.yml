@@ -2,8 +2,6 @@
 - hosts: all
   any_errors_fatal: yes
   pre_tasks:
-    - name: Include vars
-      include_vars: vars.yml
     - name: Install lvm package
       yum:
         name: "lvm2"
@@ -14,16 +12,16 @@
         regexp: '^.*udev_rules \='
         line: ' udev_rules = 0'
     - name: Get loopback device
-      shell: "losetup -l | awk '/lvmtest0.img/ {print $1}'"
+      shell: "losetup -l | awk '/lvmtest.*.img/ {print $1}'"
       changed_when: false
       register: lvm_losetup
       tags:
         - skip_ansible_lint
+    - name: Prepare image disk
+      command: 'dd if=/dev/zero of=lvmtest{{ loop_id }}.img bs=200 count=1M'
+      when: lvm_losetup.stdout != "/dev/loop0" and lvm_losetup.stdout != "/dev/loop1"
     - name: Prepare lvm inside container
-      command: '{{ item }}'
-      loop:
-        - 'dd if=/dev/zero of=lvmtest0.img bs=200 count=1M'
-        - 'losetup /dev/loop0 lvmtest0.img'
-      when: lvm_losetup.stdout != "/dev/loop0"
+      command: 'losetup /dev/loop{{ loop_id }} lvmtest{{ loop_id }}.img'
+      when: lvm_losetup.stdout != "/dev/loop0" and lvm_losetup.stdout != "/dev/loop1"
   roles:
     - ansible-role-storage-init
