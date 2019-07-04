@@ -34,12 +34,12 @@ provisioner:
       ubuntu18:
         loop_id: 1
         lvm_vgs:
-          - name: test_ubuntu
+          - name: test-ubuntu
             disks:
               - /dev/loop{{loop_id}}
         lvm_volumes:
           - name: test
-            vg: test_ubuntu
+            vg: test-ubuntu
             size: 52M
             fstype: xfs
             path: "/var/lib/docker"
