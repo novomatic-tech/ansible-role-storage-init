@@ -10,10 +10,14 @@ galaxy_info:
     - name: EL
       versions:
         - 7
+    - name: Ubuntu
+      versions:
+        - all
   galaxy_tags:
     - lvm
     - storage
     - partition
     - mountpoint
+    - filesystem
 
 dependencies: []

@@ -4,10 +4,9 @@
 default_fs_type: xfs
 # default_vg_opts: []
 
-rhel_packages:
+storage_packages:
   - e2fsprogs
   - lvm2
-  - sg3_utils
   - xfsprogs
   - xfsdump
 

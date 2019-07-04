@@ -4,6 +4,14 @@
   register: scsi_rescan
   changed_when: ('0 new or changed' not in scsi_rescan.stdout ) or
                 ('0 remapped or resized' not in scsi_rescan.stdout)
+  when: ansible_distribution == 'RedHat'
+
+- name: Scan SCSI for new device and update existing device
+  command: /usr/bin/rescan-scsi-bus.sh -s -u
+  register: scsi_rescan
+  changed_when: ('0 new or changed' not in scsi_rescan.stdout ) or
+                ('0 remapped or resized' not in scsi_rescan.stdout)
+  when: ansible_distribution == 'Ubuntu'
 
 - name: Extend pvsize
   command: pvresize {{ item.1 }}
