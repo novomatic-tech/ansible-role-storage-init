@@ -43,7 +43,7 @@
 - name: Set filesystem per logical volume
   filesystem:
     fstype: "{{ item.fstype | default(default_fs_type) }}"
-    dev: "/dev/mapper/{{ item.vg }}-{{ item.name }}"
+    dev: "/dev/mapper/{{ item.vg | replace('-','--') }}-{{ item.name }}"
     opts: "{{ item.opts | default(default_vg_opts) | default(omit) }}"
     force: no
     resizefs: no
@@ -52,7 +52,7 @@
 - name: Update mountpoints
   mount:
     path: "{{ item.path }}"
-    src: "/dev/mapper/{{ item.vg }}-{{ item.name }}"
+    src: "/dev/mapper/{{ item.vg | replace('-','--') }}-{{ item.name }}"
     fstype: "{{ item.fstype | default(default_fs_type) }}"
     state: mounted
   with_items: "{{ lvm_volumes }}"
@@ -60,7 +60,7 @@
 - name: Grow filesystem per logical volume
   filesystem:
     fstype: "{{ item.fstype | default(default_fs_type) }}"
-    dev: "/dev/mapper/{{ item.vg }}-{{ item.name }}"
+    dev: "/dev/mapper/{{ item.vg | replace('-','--') }}-{{ item.name }}"
     opts: "{{ item.opts | default(default_vg_opts) | default(omit) }}"
     force: no
     resizefs: yes
