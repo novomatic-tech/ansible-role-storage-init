@@ -21,4 +21,4 @@
   yum:
     name: "sg3_utils"
     state: present
-  when: ansible_distribution == 'RedHat'
+  when: ansible_os_family == 'RedHat'
