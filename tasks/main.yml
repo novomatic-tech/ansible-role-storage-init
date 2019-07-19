@@ -1,11 +1,11 @@
 ---
 # tasks file for storage-init
 
-- import_tasks: install.yml
+- include_tasks: install.yml
   tags:
     - tools-install
 
-- import_tasks: config.yml
+- include_tasks: config.yml
   tags:
     - storage-config
   when: lvm_volumes is defined and lvm_vgs is defined
